@@ -3,28 +3,32 @@ class formula():
 		self.a = a#数组a
 		self.b = b#数组b
 		self.c = [1]#缓存数组c
-		self.d = [a[0]]#结果数组d
+		self.d = []#结果数组d
 		self.i = 0#位置
 
 	def add(self):
-		n = self.b[self.i] - cp(self.c, self.a[self.i])
-		self.i += 1
+		n = (self.b[self.i] - self.cp(self.d, self.a[self.i]))\
+			/ self.cp(self.c, self.a[self.i])
+		self.d.append(0)
+		for i in range(self.i):
+			self.d[self.i - i] = self.d[self.i - i - 1]
+
+		self.d[0] = 0
+		for i in range(self.i + 1):
+			self.d[self.i - i] += self.c[self.i - i] * n
+
 		self.c.append(0)
-		for i in range(self.i):
-			self.c[self.i - i] = self.c[self.i - i - 1]
-		self.c[0] = 0
-		for i in range(self.i):
-			self.c[i] -= self.c[i + 1] * self.a[self.i]
+		for i in range(self.i + 1):
+			self.c[self.i - i + 1] -= self.c[self.i - i] * self.a[self.i]
 		
-		n /= self.b[self.i] - cp(self.c, self.a[self.i])
-		for i in range(self.i):
-			self.d[i] += self.c[i] / n
+		self.i += 1
 
 	def cp(self, c, x):
 		n = 1
 		y = 0
-		for i in c:
-			y += i * n
+		l = len(c)
+		for i in range(l):
+			y += c[l - i - 1] * n
 			n *= x
 		return y
 
@@ -32,4 +36,9 @@ class formula():
 		for i in self.a:
 			self.add()
 		return self.d
+
+if __name__ == "__main__":
+	n = formula([1, 2, 3], [1, 2, 4])
+	#n = formula(list(range(1, 9)), [1, 2, 3, 4, 6, 7, 8, 9])
+	print(n.cclt())
 
