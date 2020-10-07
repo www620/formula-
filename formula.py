@@ -41,12 +41,12 @@ class formula():
 		string = ''
 		for i in range(l):
 			if (d[i]):
-				if str(d[i + 1])[0] != '-' and i:
+				if str(d[i])[0] != '-' and i:
 					string += '+'
-				if (d[i] != 1 and d[i] != -1):
+				if (d[i] != 1 and d[i] != -1 or l - i == 1):
 					string += str(d[i])
 				if l - i - 1:
-					string += 'x'
+					string += '*x'
 					if l - i > 2:
 						string += '^%d' % (l - i - 1)
 		return string
@@ -54,5 +54,5 @@ class formula():
 if __name__ == "__main__":
 	n = formula([1, 2, 3], [1, 2, 4])
 	#n = formula(list(range(1, 9)), [1, 2, 3, 4, 6, 7, 8, 9])
-	print(n.cclt())
-
+	l = n.cclt()
+	print(n.rstr(l, len(l)))
