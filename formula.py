@@ -43,10 +43,12 @@ class formula():
 			if (d[i]):
 				if str(d[i])[0] != '-' and i:
 					string += '+'
-				if (d[i] != 1 and d[i] != -1 or l - i == 1):
-					string += str(d[i])
-				if l - i - 1:
-					string += '*x'
+				if l - i == 1:
+					string += "%d" % d[i]
+				else:
+					if (d[i] != 1 and d[i] != -1):
+						string += "%d*" % d[i]
+					string += 'x'
 					if l - i > 2:
 						string += '^%d' % (l - i - 1)
 		return string
