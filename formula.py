@@ -39,22 +39,26 @@ class formula():
 
 	def rstr(self, d, l):
 		string = ''
+		first = False
 		for i in range(l):
 			if (d[i]):
-				if str(d[i])[0] != '-' and i:
+				if str(d[i])[0] != '-' and first:
 					string += '+'
 				if l - i == 1:
-					string += "%d" % d[i]
+					string += str(d[i])
 				else:
-					if (d[i] != 1 and d[i] != -1):
-						string += "%d*" % d[i]
-					string += 'x'
+					if d[i] == -1:
+						string += '-'
+					elif d[i] != 1:
+						string += str(d[i]) + '*'
+					string +=  'x'
 					if l - i > 2:
-						string += '^%d' % (l - i - 1)
+						string += '^' + str(l - i - 1)
+				first = True
 		return string
 
 if __name__ == "__main__":
-	n = formula([1, 2, 3], [1, 2, 4])
+	n = formula([1, 2, 3], [1, 3, 7])
 	#n = formula(list(range(1, 9)), [1, 2, 3, 4, 6, 7, 8, 9])
 	l = n.cclt()
 	print(n.rstr(l, len(l)))
